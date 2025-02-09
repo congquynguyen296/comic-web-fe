@@ -1,17 +1,25 @@
-// components/Sidebar.jsx
-import { BookOpenIcon, FireIcon, HeartIcon, SparklesIcon, GlobeAltIcon } from "@heroicons/react/24/outline";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { BookOpenIcon } from "@heroicons/react/24/outline";
 
 export default function Sidebar() {
-  const genres = [
-    { name: "Tiên Hiệp", icon: SparklesIcon },
-    { name: "Kiếm Hiệp", icon: FireIcon },
-    { name: "Ngôn Tình", icon: HeartIcon },
-    { name: "Đam Mỹ", icon: GlobeAltIcon },
-  ];
+  const [genres, setGenres] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/nettruyen/generate") // Gọi API từ backend
+      .then((response) => {
+        setGenres(response.data.result); // Giả sử API trả về { result: [...] }
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching genres:", error);
+        setLoading(false);
+      });
+  }, []);
 
   const recentUpdates = Array(10).fill("Truyện mới cập nhật chapter 100");
-
-  // Mock data for "Truyện đề cử"
   const recommendedStories = Array(5).fill("Truyện đề cử: Tên Truyện Đề Cử");
 
   return (
@@ -19,17 +27,21 @@ export default function Sidebar() {
       {/* Genre Tabs */}
       <div className="bg-white p-4 rounded-lg shadow flex-1">
         <h2 className="text-xl font-bold mb-4">Thể loại</h2>
-        <div className="grid grid-cols-2 gap-2">
-          {genres.map(({ name, icon: Icon }) => (
-            <button
-              key={name}
-              className="p-2 flex items-center gap-2 text-left hover:bg-gray-100 rounded"
-            >
-              <Icon className="w-5 h-5 text-gray-500" />
-              {name}
-            </button>
-          ))}
-        </div>
+        {loading ? (
+          <p>Đang tải...</p>
+        ) : (
+          <div className="grid grid-cols-2 gap-2">
+            {genres.map((genre) => (
+              <button
+                key={genre.id} // Sử dụng id từ API
+                className="p-2 flex items-center gap-2 text-left hover:bg-gray-100 rounded"
+              >
+                <BookOpenIcon className="w-5 h-5 text-gray-500" />
+                {genre.name}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Recent Updates */}
