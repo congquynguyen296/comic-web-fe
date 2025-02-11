@@ -1,24 +1,40 @@
 import SearchIcon from "@heroicons/react/24/outline/MagnifyingGlassIcon";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function Header() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true); // Trạng thái đăng nhập (có thể thay bằng một trạng thái từ context hoặc state toàn cục)
-
-  // Thông tin người dùng (giả sử có avatar nếu đăng nhập)
-  const user = {
-    name: "Công Quý",
-    avatar:
-      "https://khbvptr.com/wp-content/uploads/2024/09/avatar-anime-nam-cute-16HWPsm.jpg", // Link avatar người dùng
-  };
-
+  const [userToken, setUserToken] = useState(null); // Hiện tên đăng nhập nếu đã đăng nhập
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate(); // Hook để điều hướng
+
+  useEffect(() => {
+    // Kiểm tra xem user đã đăng nhập chưa
+    const storedToken = localStorage.getItem("token");
+    if (storedToken) {
+      setUserToken(storedToken);
+    }
+  }, []);
 
   const handleSearch = () => {
     if (searchQuery.trim()) {
       navigate(`/search?query=${encodeURIComponent(searchQuery)}`);
     }
+  };
+
+  const handleLoginClick = () => {
+    navigate("/login"); // Điều hướng đến trang đăng nhập
+  };
+
+  const handleRegisterClick = () => {
+    navigate("/register"); // Điều hướng đến trang đăng ký
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("username");
+    setUserToken(null);
+    navigate("/login");
   };
 
   return (
@@ -50,23 +66,35 @@ export default function Header() {
 
         {/* Auth or User Info */}
         <div className="flex items-center gap-2">
-          {isLoggedIn ? (
-            // Nếu người dùng đã đăng nhập, hiển thị avatar và tên
+          {userToken ? (
+            // Nếu đã đăng nhập, hiển thị avatar và tên user
             <div className="flex items-center gap-4">
-              <span className="text-gray-700">{user.name}</span>
+              <span className="text-gray-700">{"Công Quý"}</span>
               <img
-                src={user.avatar}
-                alt={user.name}
+                src="https://res.cloudinary.com/dyimxnbb8/image/upload/v1739182784/c1f3dec5-06db-4334-87ca-bd965612530f_avatar07.jpg"
+                alt={userToken}
                 className="w-12 h-12 rounded-full"
               />
+              <button
+                onClick={handleLogout}
+                className="px-4 py-2 rounded-full bg-red-500 text-white hover:bg-red-600"
+              >
+                Đăng xuất
+              </button>
             </div>
           ) : (
             // Nếu chưa đăng nhập, hiển thị nút đăng nhập và đăng ký
             <>
-              <button className="px-4 py-2 rounded-full bg-gray-800 text-white hover:bg-gray-700">
+              <button
+                onClick={handleLoginClick}
+                className="px-4 py-2 rounded-full bg-gray-800 text-white hover:bg-gray-700"
+              >
                 Đăng nhập
               </button>
-              <button className="px-4 py-2 rounded-full border border-gray-800 hover:bg-gray-50">
+              <button
+                onClick={handleRegisterClick}
+                className="px-4 py-2 rounded-full border border-gray-800 hover:bg-gray-50"
+              >
                 Đăng ký
               </button>
             </>

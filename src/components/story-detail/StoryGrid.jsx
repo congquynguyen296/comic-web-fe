@@ -31,7 +31,7 @@ export default function StoryGrid() {
         setStories(data.content || []); // Sửa thành data.result
         setTotalPages(data.totalPages || 1); // Số trang
   
-        console.log("Stories:", data.result);
+        console.log("Stories:", data);
       } catch (error) {
         console.error("Lỗi khi gọi API:", error);
       }
