@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import StoryItem from "./StoryItem";
 
-const STORIES_PER_PAGE = 2; // Số lượng truyện trên mỗi trang
+const STORIES_PER_PAGE = 6; // Số lượng truyện trên mỗi trang
 
 export default function StoryGrid() {
   const [stories, setStories] = useState([]);

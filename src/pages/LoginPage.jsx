@@ -129,6 +129,7 @@ const LoginPage = () => {
 
             {/* Chuyển sang trang đăng ký */}
             <button
+              type="button" // Thêm vào để tránh gọi bị gọi lại api login khi chuyển sang register
               onClick={() => navigate("/register")}
               className="text-gray-700 hover:underline"
             >
