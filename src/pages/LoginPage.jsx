@@ -19,7 +19,7 @@ const LoginPage = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/nettruyen/auth/login",
+        "http://localhost:8080/nettruyen/api/auth/login",
         { username, password }
       );
 

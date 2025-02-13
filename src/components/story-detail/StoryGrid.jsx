@@ -12,7 +12,7 @@ export default function StoryGrid() {
   useEffect(() => {
     const fetchStories = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/nettruyen/stories", {
+        const response = await axios.get("http://localhost:8080/nettruyen/api/stories", {
           params: {
             pageNo: currentPage,
             pageSize: STORIES_PER_PAGE,

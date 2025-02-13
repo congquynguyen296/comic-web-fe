@@ -8,7 +8,7 @@ export default function Sidebar() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/nettruyen/generate") // Gọi API từ backend
+      .get("http://localhost:8080/nettruyen/api/generate") // Gọi API từ backend
       .then((response) => {
         setGenres(response.data.result); // Giả sử API trả về { result: [...] }
         setLoading(false);
