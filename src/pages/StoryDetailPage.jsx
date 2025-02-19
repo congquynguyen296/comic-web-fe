@@ -1,7 +1,7 @@
 import Header from '../components/main-component/Header';
-import StoryInfo from '../components/story-detail/StoryInfo';
-import Synopsis from '../components/story-detail/Synopsis';
-import ChapterList from '../components/story-detail/ChapterList';
+import StoryInfo from '../features/story-detail/StoryInfo';
+import Synopsis from '../features/story-detail/Synopsis';
+import ChapterList from '../features/story-detail/ChapterList';
 import Footer from '../components/main-component/Footer';
 
 export default function StoryDetailPage() {
