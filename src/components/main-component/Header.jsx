@@ -47,19 +47,19 @@ export default function Header() {
 
         {/* Search Bar */}
         <div className="flex-1 max-w-xl mx-auto">
-          <div className="relative rounded-full border border-gray-300 overflow-hidden">
+          <div className="relative rounded-full border border-gray-300 overflow-hidden transition-all duration-300 hover:border-gray-400 hover:shadow-lg">
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)} // Lắng nghe sự thay đổi input
               placeholder="Tìm kiếm truyện..."
-              className="w-full px-6 py-2 focus:outline-none"
+              className="w-full px-6 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
             />
             <button
               onClick={handleSearch}
-              className="absolute right-0 top-0 bottom-0 px-4 bg-gray-100 hover:bg-gray-200"
+              className="absolute right-0 top-0 bottom-0 px-4 bg-gray-100 hover:bg-gray-200 transition-all duration-300"
             >
-              <SearchIcon className="w-5 h-5 text-gray-600" />
+              <SearchIcon className="w-5 h-5 text-gray-600 hover:text-gray-800 transition-all duration-300" />
             </button>
           </div>
         </div>

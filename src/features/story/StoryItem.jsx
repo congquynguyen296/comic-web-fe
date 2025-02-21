@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 
-export default function StoryItem({ id, title, description, chapterCount, coverImage }) {
+export default function StoryItem({ code, title, description, chapterCount, coverImage }) {
 
   return (
-    <Link to={`/story/${id}`}>
+    <Link to={`/story/${code}`}>
       <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
         {/* Hiển thị ảnh */}
         {coverImage ? (

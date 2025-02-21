@@ -1,6 +1,6 @@
 // components/MainContent.jsx
 import Sidebar from "./Sidebar";
-import StoryGrid from "../../features/story/StoryGrid";
+import StoryGrid from "../story/StoryGrid";
 
 export default function MainContent() {
   return (

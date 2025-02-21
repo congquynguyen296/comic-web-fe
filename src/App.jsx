@@ -5,6 +5,7 @@ import StoryDetailPage from "./pages/StoryDetailPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import ConfirmEmailPage from "./pages/ConfirmEmailPage";
+import StoryContent from "./features/story/StoryContent";
 
 export default function App() {
   return (
@@ -17,7 +18,8 @@ export default function App() {
         <Route path="/" element={<Navigate to="/home-page" replace />} />
         {/* Sử dụng Routes để định nghĩa các route */}
         <Route path="/home-page" element={<HomePage />} />
-        <Route path="/story/:id" element={<StoryDetailPage />} />
+        <Route path="/story/:code" element={<StoryDetailPage />} />
+        <Route path="/story/:storyCode/:chapterCode" element={<StoryContent />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/register/confirm-otp" element={<ConfirmEmailPage />} />

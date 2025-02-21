@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import StoryItem from "./StoryItem";
+import StoryItem from "../../features/story/StoryItem";
 
 const STORIES_PER_PAGE = 6; // Số lượng truyện trên mỗi trang
 
