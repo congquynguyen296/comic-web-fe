@@ -53,13 +53,21 @@ export default function StoryDetailPage() {
           chapters={story.chapters}
         />
         <div className="my-8 border-t border-gray-200"></div>
-
         {/* Truyền dữ liệu vào Synopsis */}
         <Synopsis description={story.description} />
         <div className="my-8 border-t border-gray-200"></div>
-
         {/* Truyền dữ liệu vào ChapterList (bọc bằng context provider - useContext) */}
         <ChapterList chapters={story.chapters} storyCode={story.code} />
+
+        {/* {Phần xem thêm} */}
+        <div className="flex justify-center mt-4">
+          <button
+            onClick={() => console.log("Xem thêm")}
+            className="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-600 transition-colors"
+          >
+            Xem thêm
+          </button>
+        </div>
       </div>
 
       <Footer />
