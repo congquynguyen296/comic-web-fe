@@ -11,23 +11,42 @@ export default function StoryDetailPage() {
   const { code } = useParams();
   const [story, setStory] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(0); // Trang hiện tại (bắt đầu từ 0)
+  const [pageSize, setPageSize] = useState(20); // Số lượng chapter trên mỗi trang
+  const [totalPages, setTotalPages] = useState(0); // Tổng số trang
 
   // Fetch lấy dữ liệu truyện
   useEffect(() => {
     const fetchStory = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:8080/nettruyen/api/story/${code}`
-        );
-        setStory(response.data.result); // Lưu dữ liệu từ API
-        setLoading(false); // Tắt trạng thái loading
+        const [storyResponse, totalChaptersResponse] = await Promise.all([
+          axios.get(`http://localhost:8080/nettruyen/api/story/${code}?page-no=${currentPage}&page-size=${pageSize}`),
+          axios.get(`http://localhost:8080/nettruyen/api/story/${code}/total-chapters`)
+        ]);
+  
+        setStory(storyResponse.data.result);
+        setTotalPages(Math.ceil(totalChaptersResponse.data / pageSize)); // Tính tổng số trang đúng cách
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching story:", error);
       }
     };
-
+  
     fetchStory();
-  }, [code]); // Chỉ chạy lại khi code thay đổi
+  }, [code, currentPage, pageSize]); // Chạy lại khi code, currentPage hoặc pageSize thay đổi
+  
+  // Hàm chuyển trang
+  const goToPreviousPage = () => {
+    if (currentPage > 0) {
+      setCurrentPage((prevPage) => prevPage - 1); // Giảm trang hiện tại đi 1
+    }
+  };
+
+  const goToNextPage = () => {
+    if (currentPage < totalPages - 1) {
+      setCurrentPage((prevPage) => prevPage + 1); // Tăng trang hiện tại lên 1
+    }
+  };
 
   if (loading) {
     return <div>Loading...</div>; // Hiển thị khi đang tải dữ liệu
@@ -56,18 +75,15 @@ export default function StoryDetailPage() {
         {/* Truyền dữ liệu vào Synopsis */}
         <Synopsis description={story.description} />
         <div className="my-8 border-t border-gray-200"></div>
-        {/* Truyền dữ liệu vào ChapterList (bọc bằng context provider - useContext) */}
-        <ChapterList chapters={story.chapters} storyCode={story.code} />
-
-        {/* {Phần xem thêm} */}
-        <div className="flex justify-center mt-4">
-          <button
-            onClick={() => console.log("Xem thêm")}
-            className="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-600 transition-colors"
-          >
-            Xem thêm
-          </button>
-        </div>
+        {/* Truyền dữ liệu vào ChapterList */}
+        <ChapterList
+          chapters={story.chapters}
+          storyCode={story.code}
+          currentPage={currentPage}
+          totalPages={totalPages}
+          goToPreviousPage={goToPreviousPage}
+          goToNextPage={goToNextPage}
+        />
       </div>
 
       <Footer />

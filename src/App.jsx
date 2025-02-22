@@ -19,7 +19,7 @@ export default function App() {
         {/* Sử dụng Routes để định nghĩa các route */}
         <Route path="/home-page" element={<HomePage />} />
         <Route path="/story/:code" element={<StoryDetailPage />} />
-        <Route path="/story/:storyCode/:chapterCode" element={<StoryContent />} />
+        <Route path="/story/:storyCode/:chapterNumber" element={<StoryContent />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/register/confirm-otp" element={<ConfirmEmailPage />} />
