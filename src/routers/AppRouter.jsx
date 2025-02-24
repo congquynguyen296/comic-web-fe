@@ -5,6 +5,7 @@ import LoginPage from "../pages/LoginPage";
 import RegisterPage from "../pages/RegisterPage";
 import ConfirmEmailPage from "../pages/ConfirmEmailPage";
 import StoryContent from "../features/story/StoryContent";
+import AuthenticatePage from "../pages/AuthenticationPage";
 
 export default function AppRouter() {
   return (
@@ -25,6 +26,7 @@ export default function AppRouter() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/register/confirm-otp" element={<ConfirmEmailPage />} />
+        <Route path="/authentication" element={<AuthenticatePage />} />
       </Routes>
     </BrowserRouter>
   );

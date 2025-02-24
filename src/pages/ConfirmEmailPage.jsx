@@ -1,5 +1,5 @@
 import { useSearchParams } from "react-router-dom";
-import SubmitCode from "../features/auth/SubmitCode";
+import SubmitCode from "../components/auth/SubmitCode";
 
 
 export default function ConfirmEmailPage() {

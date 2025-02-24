@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import ErrorAuthMessage from "../../components/message/ErrorAuthMessage";
-import SuccessAuthMessage from "../../components/message/SuccessAuthMessage";
+import ErrorAuthMessage from "../message/ErrorAuthMessage";
+import SuccessAuthMessage from "../message/SuccessAuthMessage";
 import axios from "axios";
 
 export default function SubmitCode({ email, token }) {

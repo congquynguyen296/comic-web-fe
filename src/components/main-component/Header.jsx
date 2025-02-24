@@ -1,16 +1,16 @@
 import SearchIcon from "@heroicons/react/24/outline/MagnifyingGlassIcon";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { KEY_TOKEN } from "../../services/localStorageService";
 
-export default function Header() {
-  const [userToken, setUserToken] = useState(null); // Hiện tên đăng nhập nếu đã đăng nhập
+export default function Header({ userDetail }) { // userDetail nhận từ props
+  const [userToken, setUserToken] = useState(null); // Kiểm tra trạng thái đăng nhập
   const [searchQuery, setSearchQuery] = useState("");
-  const navigate = useNavigate(); // Hook để điều hướng
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Kiểm tra xem user đã đăng nhập chưa
-    const storedToken = localStorage.getItem("token");
+    // Kiểm tra token trong localStorage để xác định trạng thái đăng nhập
+    const storedToken = localStorage.getItem(KEY_TOKEN);
     if (storedToken) {
       setUserToken(storedToken);
     }
@@ -23,18 +23,18 @@ export default function Header() {
   };
 
   const handleLoginClick = () => {
-    navigate("/login"); // Điều hướng đến trang đăng nhập
+    navigate("/login");
   };
 
   const handleRegisterClick = () => {
-    navigate("/register"); // Điều hướng đến trang đăng ký
+    navigate("/register");
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    localStorage.removeItem(KEY_TOKEN);
     localStorage.removeItem("username");
     setUserToken(null);
-    navigate("/login");
+    navigate("/home-page");
   };
 
   return (
@@ -51,7 +51,7 @@ export default function Header() {
             <input
               type="text"
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)} // Lắng nghe sự thay đổi input
+              onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Tìm kiếm truyện..."
               className="w-full px-6 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
             />
@@ -66,13 +66,15 @@ export default function Header() {
 
         {/* Auth or User Info */}
         <div className="flex items-center gap-2">
-          {userToken ? (
-            // Nếu đã đăng nhập, hiển thị avatar và tên user
+          {userToken && userDetail ? ( // Kiểm tra cả userToken và userDetail
+            // Nếu đã đăng nhập, hiển thị thông tin từ userDetail
             <div className="flex items-center gap-4">
-              <span className="text-gray-700">{"Công Quý"}</span>
+              <span className="text-gray-700">
+                {userDetail.firstName || "Người dùng"} {/* Hiển thị tên, mặc định nếu không có */}
+              </span>
               <img
-                src="https://res.cloudinary.com/dyimxnbb8/image/upload/v1739182784/c1f3dec5-06db-4334-87ca-bd965612530f_avatar07.jpg"
-                alt={userToken}
+                src={userDetail.picture || "https://res.cloudinary.com/dyimxnbb8/image/upload/v1739182784/c1f3dec5-06db-4334-87ca-bd965612530f_avatar07.jpg"} // Hiển thị ảnh từ userDetail hoặc ảnh mặc định
+                alt={userDetail.username || "User Avatar"}
                 className="w-12 h-12 rounded-full"
               />
               <button
